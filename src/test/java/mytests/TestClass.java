@@ -1,9 +1,12 @@
 package mytests;
 
+import java.time.Duration;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class TestClass {
@@ -12,6 +15,7 @@ public class TestClass {
 	public void verifySuccessLogin() {
 
 		WebDriver driver = new ChromeDriver();
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
 
 		driver.get("https://the-internet.herokuapp.com/");
 
@@ -30,10 +34,7 @@ public class TestClass {
 		WebElement ConfirmationMessageElement = driver.findElement(By.xpath("//*[@id='content']/div/h4"));
 		String message = ConfirmationMessageElement.getText();
 
-		// Using ternary operator
-		System.out.println(
-				message.equals("Welcome to the Secure Area. When you are done click logout below.") ? "Test Pass"
-						: "Test Fail");
+		Assert.assertEquals(message, "Welcome to the Secure Area. When you are done click logout below.", "I want to go back home");
 
 		driver.quit();
 
